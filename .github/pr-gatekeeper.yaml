@@ -1,0 +1,28 @@
+# Example only. Copy to the sandbox's trusted base branch after reviewing paths.
+# Replace reviewer IDs with actual GitHub numeric user IDs before role-gated tests.
+policy:
+  version: sandbox-v1
+  riskRules:
+    - { id: tests, pattern: "**/*.test.*", risk: LOW }
+    - { id: specs, pattern: "**/*.spec.*", risk: LOW }
+    - { id: stories, pattern: "**/*.stories.*", risk: LOW }
+    - { id: markdown, pattern: "**/*.md", risk: LOW }
+    - { id: ui, pattern: "ui/**", risk: MEDIUM }
+    - { id: feature, pattern: "feature/**", risk: MEDIUM }
+    - { id: shared, pattern: "libs/shared/**", risk: HIGH }
+    - { id: harness, pattern: ".harness/**", risk: HIGH }
+    - { id: auth, pattern: "auth/**", risk: HIGH }
+    - { id: money, pattern: "money/**", risk: CRITICAL }
+  components:
+    - name: sandbox
+      patterns: ["**"]
+  sizeExclusions: ["generated/**", "vendor/**"]
+  policyPaths: [".github/pr-gatekeeper.yaml"]
+  authorityRoles: [security, release]
+  exceptionApprovers: []
+reviewers: []
+# Example entry (replace placeholder, then remove the comments):
+# - id: "ACTUAL_NUMERIC_GITHUB_USER_ID"
+#   domains: [sandbox]
+#   sme: false
+#   authorityRoles: []
